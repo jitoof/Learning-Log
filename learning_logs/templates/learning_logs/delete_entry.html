@@ -1,0 +1,21 @@
+{% extends 'learning_logs/base.html' %}
+
+{% block page_header %}
+	<h2>Delete entry</h2>
+{% endblock page_header %}
+
+{% block content %}
+	<p>Are you sure you want to delete this entry?</p>
+
+	<div class="card mb-3">
+		<div class="card-body">
+			{{ entry.text|linebreaks }}
+		</div>
+	</div>
+
+	<form method="post" action="{% url 'learning_logs:delete_entry' entry.id %}">
+		{% csrf_token %}
+		<button type="submit" class="btn btn-danger">Delete</button>
+		<a class="btn btn-secondary" href="{% url 'learning_logs:topic' topic.id %}">Cancel</a>
+	</form>
+{% endblock content %}

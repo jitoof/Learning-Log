@@ -1,24 +1,37 @@
 {% extends 'learning_logs/base.html' %}
 
 {% block page_header %}
-	<h3>{{ topic }} </h3>
+	<h3>{{ topic }}</h3>
 {% endblock page_header %}
 
 {% block content %}
 
 	<p>Topic: {{ topic }}</p>
-	
+
+	{% if topic.public %}
+		<p><small>Public topic - by: {{ topic.owner }}</small></p>
+	{% endif %}
+
 	<p>Entries:</p>
-	<p> 
-		<a href="{% url 'learning_logs:new_entry' topic.id %}">Add new entry</a>
-	</p>	
-	<ul>
+
+	{% if topic.owner == user %}
+		<p>
+			<a href="{% url 'learning_logs:new_entry' topic.id %}">Add new entry</a>
+			-
+			<a href="{% url 'learning_logs:delete_topic' topic.id %}">Delete topic</a>
+		</p>
+	{% endif %}
+
 	{% for entry in entries %}
 		<div class="card mb-3">
 			<h4 class="card-header">
 				{{ entry.date_added|date:'M d, Y H:i' }}
-				<small><a href="{% url 'learning_logs:edit_entry' entry.id %}">
-					edit entry</a></small>
+				{% if topic.owner == user %}
+					<small><a href="{% url 'learning_logs:edit_entry' entry.id %}">
+						edit entry</a></small>
+					<small><a href="{% url 'learning_logs:delete_entry' entry.id %}">
+						- delete</a></small>
+				{% endif %}
 			</h4>
 			<div class="card-body">
 				{{ entry.text|linebreaks }}
@@ -27,6 +40,5 @@
 	{% empty %}
 		<p>There are no entries for this topic yet.</p>
 	{% endfor %}
-	</ul>
 
 {% endblock content %}

@@ -1,0 +1,16 @@
+{% extends 'learning_logs/base.html' %}
+
+{% block page_header %}
+	<h2>Delete topic</h2>
+{% endblock page_header %}
+
+{% block content %}
+	<p>Are you sure you want to delete <strong>{{ topic }}</strong>?
+	Deleting will remove all it's entries too.</p>
+
+	<form method="post" action="{% url 'learning_logs:delete_topic' topic.id %}">
+		{% csrf_token %}
+		<button type="submit" class="btn btn-danger">Delete</button>
+		<a class="btn btn-secondary" href="{% url 'learning_logs:topic' topic.id %}">Cancel</a>
+	</form>
+{% endblock content %}s

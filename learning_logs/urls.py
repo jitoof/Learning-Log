@@ -15,5 +15,12 @@ urlpatterns = [
 	path('new_entry/<int:topic_id>/', views.new_entry, name='new_entry'),
 	#Pagina para editar una entrada
 	path('edit_entry/<int:entry_id>/', views.edit_entry, name='edit_entry'),
+	#Pagina para temas publicos.
+	path('public/', views.public_topics, name='public_topics'),
+	#Pagina para borrar una entrada
+	path('delete_entry/<int:entry_id>/', views.delete_entry, name='delete_entry'),
+	#Pagina para borrar un tema
+	path('delete_topic/<int:topic_id>/', views.delete_topic, name='delete_topic')
+
 ]
 
